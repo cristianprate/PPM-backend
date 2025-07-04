@@ -1,0 +1,9 @@
+<h1>Eventi Disponibili</h1>
+
+<ul>
+    {% for event in events %}
+    <li>
+        <a href="{% url 'event-detail' event.pk %}">{{ event.title }}</a> – {{ event.date }}
+    </li>
+    {% endfor %}
+</ul>
