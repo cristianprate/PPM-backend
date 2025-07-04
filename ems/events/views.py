@@ -22,10 +22,12 @@ class EventDetailView(DetailView):
 # 3. CreateView - solo Organizer può creare eventi
 class EventCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Event
+    form_class = EventForm
     template_name = 'events/event_form.html'
     fields = ['title', 'description', 'date', 'location']
     permission_required = 'events.add_event'
     success_url = reverse_lazy('event-list')
+    raise_exception = True
 
     def form_valid(self, form):
         form.instance.organizer = self.request.user
