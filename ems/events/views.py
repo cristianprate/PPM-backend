@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 from django.urls import reverse_lazy
 from .models import Event, Registration
+from .forms import EventForm
 
 # 1. ListView - mostra eventi disponibili
 class EventListView(ListView):
@@ -24,7 +25,6 @@ class EventCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Event
     form_class = EventForm
     template_name = 'events/event_form.html'
-    fields = ['title', 'description', 'date', 'location']
     permission_required = 'events.add_event'
     success_url = reverse_lazy('event-list')
     raise_exception = True

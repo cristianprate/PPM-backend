@@ -13,6 +13,7 @@ class Event(models.Model):
         on_delete=models.CASCADE,
         related_name='organized_events'
     )
+    attendees = models.ManyToManyField(CustomUser, related_name='joined_events', blank=True)
 
     def __str__(self):
         return self.title
