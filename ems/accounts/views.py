@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView, LogoutView
 from .forms import CustomUserCreationForm
 from .models import CustomUser
+from events.models import Event
 
 class RegisterView(CreateView):
     model = CustomUser

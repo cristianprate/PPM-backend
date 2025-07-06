@@ -16,10 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from events.views import join_event
+from django.shortcuts import redirect
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('events/', include('events.urls')),
     path('accounts/', include('accounts.urls')),
-    path('', include('events.urls')),
+    path('', lambda request: redirect('login')),
+    path('event/<int:pk>/join/', join_event, name='event-join'),
 ]
