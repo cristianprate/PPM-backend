@@ -2,17 +2,20 @@ from django.urls import path
 from .views import (
     EventListView,
     EventDetailView,
-    EventCreateView,
     register_to_event,
     unregister_from_event,
     dashboard,
     join_event,
     subscriptions_view,
+    profile_view,
+    manage_events_view,
+    EventCreateView,
+    delete_event,
 )
 
 urlpatterns = [
-        # Homepage → dashboard/menu
-        path('', dashboard, name='dashboard'),
+        # Dashboard - root path
+                path('dashboard/', dashboard, name='dashboard'),
 
         # Eventi
         path('events/', EventListView.as_view(), name='event-list'),
@@ -21,8 +24,10 @@ urlpatterns = [
         path('events/<int:event_id>/register/', register_to_event, name='event-register'),
         path('events/<int:event_id>/unregister/', unregister_from_event, name='event-unregister'),
         path('events/<int:pk>/join/', join_event, name='event-join'),
+        path('manage/', manage_events_view, name='manage-events'),
+        path('event/<int:pk>/delete/', delete_event, name='event-delete'),
 
         # Utente
         path('subscriptions/', subscriptions_view, name='subscriptions'),
-        path('profile/', lambda request: render(request, 'profile.html'), name='profile'),  # placeholder
+        path('profile/', profile_view, name='profile'),
 ]

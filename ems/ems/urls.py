@@ -16,8 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from events.views import join_event
 from django.shortcuts import redirect
+from events.views import dashboard
+
 
 
 urlpatterns = [
@@ -25,5 +26,5 @@ urlpatterns = [
     path('events/', include('events.urls')),
     path('accounts/', include('accounts.urls')),
     path('', lambda request: redirect('login')),
-    path('event/<int:pk>/join/', join_event, name='event-join'),
+    path('dashboard/', dashboard, name='dashboard'),
 ]

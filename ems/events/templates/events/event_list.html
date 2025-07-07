@@ -1,9 +1,34 @@
-<h1>Eventi Disponibili</h1>
+{% extends "base.html" %}
+
+{% block content %}
+<h2>All Events</h2>
 
 <ul>
     {% for event in events %}
     <li>
-        <a href="{% url 'event-detail' event.pk %}">{{ event.title }}</a> – {{ event.date }}
+        <h3>{{ event.title }}</h3>
+        <p>{{ event.description }}</p>
+        <p><strong>Date:</strong> {{ event.date }}</p>
+
+        {% if event.id in registered_event_ids %}
+        <p style="color: green;">✅ You are registered for this event.</p>
+        <form method="post" action="{% url 'event-unregister' event.id %}">
+            {% csrf_token %}
+            <button type="submit">Unregister</button>
+        </form>
+        {% else %}
+        <p style="color: red;">➕ Not registered</p>
+        <form method="post" action="{% url 'event-register' event.id %}">
+            {% csrf_token %}
+            <button type="submit">Register</button>
+        </form>
+        {% endif %}
+
+        <hr>
     </li>
+    {% empty %}
+    <li>No events available.</li>
     {% endfor %}
 </ul>
+
+{% endblock %}

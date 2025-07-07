@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>My Subscribed Events</h2>
+
+{% if events %}
+<ul>
+    {% for event in events %}
+    <li>
+        <h3>{{ event.title }}</h3>
+        <p>{{ event.description }}</p>
+        <p><strong>Date:</strong> {{ event.date }}</p>
+
+        <form method="post" action="{% url 'event-unregister' event.id %}">
+            {% csrf_token %}
+            <button type="submit">Unregister</button>
+        </form>
+    </li>
+    <hr>
+    {% endfor %}
+</ul>
+{% else %}
+<p>You are not registered for any events yet.</p>
+{% endif %}
+{% endblock %}

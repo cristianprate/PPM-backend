@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h2>Welcome, {{ user.username }}!</h2>
+
+<div class="menu">
+    <a href="{% url 'event-list' %}">📅 View All Events</a><br>
+    <a href="{% url 'subscriptions' %}">✅ View My Subscriptions</a><br>
+    <a href="{% url 'profile' %}">👤 Profile</a><br>
+
+    {% if is_organizer %}
+    <a href="{% url 'manage-events' %}">🛠️ Manage My Events</a><br>
+    {% endif %}
+</div>
+{% endblock %}

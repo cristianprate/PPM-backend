@@ -1,0 +1,15 @@
+
+<h1>My Events</h1>
+
+<a href="{% url 'event-create' %}">➕ Create New Event</a>
+
+<ul>
+    {% for event in events %}
+    <li>
+        <strong>{{ event.title }}</strong> – {{ event.date }}
+        <a href="{% url 'event-delete' event.pk %}">❌ Delete</a>
+    </li>
+    {% empty %}
+    <li>No events created yet.</li>
+    {% endfor %}
+</ul>
