@@ -2,15 +2,20 @@
 {% load static %}
 
 {% block content %}
-<h2>Welcome, {{ user.username }}!</h2>
+<div class="container mt-4">
+    <div class="text-center">
+        <h2 class="mb-4">Welcome, {{ user.username }}!</h2>
+    </div>
 
-<div class="menu">
-    <a href="{% url 'event-list' %}">📅 View All Events</a><br>
-    <a href="{% url 'subscriptions' %}">✅ View My Subscriptions</a><br>
-    <a href="{% url 'profile' %}">👤 Profile</a><br>
+    <div class="d-grid gap-3 col-6 mx-auto">
+        <a href="{% url 'event-list' %}" class="btn btn-primary">View All Events</a>
+        <a href="{% url 'subscriptions' %}" class="btn btn-success">My Subscriptions</a>
+        <a href="{% url 'profile' %}" class="btn btn-info">Profile</a>
 
-    {% if is_organizer %}
-    <a href="{% url 'manage-events' %}">🛠️ Manage My Events</a><br>
-    {% endif %}
+        {% if is_organizer %}
+        <a href="{% url 'manage-events' %}" class="btn btn-warning">Manage My Events</a>
+        {% endif %}
+    </div>
+
 </div>
 {% endblock %}

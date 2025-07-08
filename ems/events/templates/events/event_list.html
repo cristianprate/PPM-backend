@@ -1,34 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>All Events</h2>
+<h2 class="mb-4">All Events</h2>
 
-<ul>
+{% if events %}
+<div class="row row-cols-1 row-cols-md-2 g-4">
     {% for event in events %}
-    <li>
-        <h3>{{ event.title }}</h3>
-        <p>{{ event.description }}</p>
-        <p><strong>Date:</strong> {{ event.date }}</p>
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ event.title }}</h5>
+                <p class="card-text">{{ event.description }}</p>
+                <p class="card-text"><small class="text-muted">Date: {{ event.date }}</small></p>
 
-        {% if event.id in registered_event_ids %}
-        <p style="color: green;">✅ You are registered for this event.</p>
-        <form method="post" action="{% url 'event-unregister' event.id %}">
-            {% csrf_token %}
-            <button type="submit">Unregister</button>
-        </form>
-        {% else %}
-        <p style="color: red;">➕ Not registered</p>
-        <form method="post" action="{% url 'event-register' event.id %}">
-            {% csrf_token %}
-            <button type="submit">Register</button>
-        </form>
-        {% endif %}
-
-        <hr>
-    </li>
-    {% empty %}
-    <li>No events available.</li>
+                {% if event.id in registered_event_ids %}
+                <p class="text-success fw-semibold">✅ You are registered for this event.</p>
+                <form method="post" action="{% url 'event-unregister' event.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger btn-sm">Unregister</button>
+                </form>
+                {% else %}
+                <p class="text-danger fw-semibold">➕ Not registered</p>
+                <form method="post" action="{% url 'event-register' event.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-primary btn-sm">Register</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
     {% endfor %}
-</ul>
+</div>
+{% else %}
+<p class="text-muted">No events available.</p>
+{% endif %}
 
 {% endblock %}

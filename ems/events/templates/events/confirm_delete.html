@@ -1,6 +1,15 @@
-<h2>Are you sure you want to delete "{{ event.title }}"?</h2>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Yes, Delete</button>
-    <a href="{% url 'manage-events' %}">Cancel</a>
-</form>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <h2 class="mb-4 text-danger">Are you sure you want to delete "<strong>{{ event.title }}</strong>"?</h2>
+
+    <form method="post" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger me-2">🗑️ Yes, Delete</button>
+    </form>
+
+    <a href="{% url 'manage-events' %}" class="btn btn-secondary">↩️ Cancel</a>
+
+</div>
+{% endblock %}

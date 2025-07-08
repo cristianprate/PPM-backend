@@ -1,15 +1,22 @@
+{% extends "base.html" %}
 
-<h1>My Events</h1>
+{% block content %}
+<h1 class="mb-4">My Events</h1>
 
-<a href="{% url 'event-create' %}">➕ Create New Event</a>
+<a href="{% url 'event-create' %}" class="btn btn-primary mb-3">Create New Event</a>
 
-<ul>
+{% if events %}
+<ul class="list-group">
     {% for event in events %}
-    <li>
-        <strong>{{ event.title }}</strong> – {{ event.date }}
-        <a href="{% url 'event-delete' event.pk %}">❌ Delete</a>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+            <strong>{{ event.title }}</strong> – <small class="text-muted">{{ event.date }}</small>
+        </div>
+        <a href="{% url 'event-delete' event.pk %}" class="btn btn-sm btn-danger">Delete</a>
     </li>
-    {% empty %}
-    <li>No events created yet.</li>
     {% endfor %}
 </ul>
+{% else %}
+<p class="text-muted">No events created yet.</p>
+{% endif %}
+{% endblock %}

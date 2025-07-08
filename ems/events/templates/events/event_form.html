@@ -1,6 +1,14 @@
-<h2>Crea un nuovo evento</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Crea evento</button>
-</form>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Create a New Event</h2>
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Create Event</button>
+    </form>
+
+</div>
+{% endblock %}
