@@ -18,13 +18,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
 from events.views import dashboard
+from django.contrib.auth.decorators import login_required
 
-
+def root_redirect(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+    return redirect('login')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('events/', include('events.urls')),
     path('accounts/', include('accounts.urls')),
-    path('', lambda request: redirect('login')),
+    path('', root_redirect, name='root-redirect'),
     path('dashboard/', dashboard, name='dashboard'),
 ]
