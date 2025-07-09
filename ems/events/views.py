@@ -8,6 +8,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from .models import Event, Registration
 from .forms import EventForm
+from accounts.models import Notification
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 # ListView - mostra eventi disponibili
 class EventListView(LoginRequiredMixin, ListView):
@@ -51,10 +54,12 @@ def unregister_from_event(request, event_id):
 @login_required
 def dashboard(request):
     user = request.user
+    notifications = Notification.objects.filter(user=user, is_active=True)
     ctx = {
-            'is_organizer': user.groups.filter(name='Organizer').exists(),
-            'is_attendee':  user.groups.filter(name='Attendee').exists(),
-        }
+        'is_organizer': user.groups.filter(name='Organizer').exists(),
+        'is_attendee': user.groups.filter(name='Attendee').exists(),
+        'notifications': notifications,
+    }
     return render(request, 'events/dashboard.html', ctx)
 
 # JoinEventView
@@ -102,12 +107,34 @@ class EventCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         return super().form_valid(form)
 
 # DeleteEvent - l'Organizer può cancellare un suo evento
+from accounts.models import Notification  # importa il modello notifiche
+from django.contrib.auth.models import Group
+
 @login_required
 @permission_required('events.delete_event', raise_exception=True)
 def delete_event(request, pk):
     event = get_object_or_404(Event, pk=pk, organizer=request.user)
     if request.method == 'POST':
+        # Trova tutti gli utenti iscritti (organizer e attendee)
+        attendees = event.attendees.all()  # supponendo relazione ManyToMany con nome 'attendees'
+
+        # Crea notifiche per gli utenti iscritti
+        message = f'The event "{event.title}" has been deleted.'
+        for user in attendees:
+            Notification.objects.create(user=user, message=message, is_active=True)
+
+        # Se vuoi notificare anche l’organizer, aggiungilo
+        Notification.objects.create(user=event.organizer, message=message, is_active=True)
+
         event.delete()
         messages.success(request, "Event deleted successfully.")
         return redirect('manage-events')
     return render(request, 'events/confirm_delete.html', {'event': event})
+
+@login_required
+@csrf_exempt
+def clear_notifications(request):
+    if request.method == 'POST':
+        Notification.objects.filter(user=request.user, is_active=True).update(is_active=False)
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'fail'}, status=400)

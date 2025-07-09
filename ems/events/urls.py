@@ -11,6 +11,7 @@ from .views import (
     manage_events_view,
     EventCreateView,
     delete_event,
+    clear_notifications,
 )
 
 urlpatterns = [
@@ -26,6 +27,7 @@ urlpatterns = [
         path('events/<int:pk>/join/', join_event, name='event-join'),
         path('manage/', manage_events_view, name='manage-events'),
         path('event/<int:pk>/delete/', delete_event, name='event-delete'),
+        path('clear-notifications/', clear_notifications, name='clear_notifications'),
 
         # Utente
         path('subscriptions/', subscriptions_view, name='subscriptions'),

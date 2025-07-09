@@ -2,6 +2,17 @@
 {% load static %}
 
 {% block content %}
+{% if notifications %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Important!</strong> You have updates on your events.
+    <ul>
+        {% for notification in notifications %}
+        <li>{{ notification.message }}</li>
+        {% endfor %}
+    </ul>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" id="notif-close-btn"></button>
+</div>
+{% endif %}
 <div class="container mt-4">
     <div class="text-center">
         <h2 class="mb-4">Welcome, {{ user.username }}!</h2>
@@ -18,4 +29,20 @@
     </div>
 
 </div>
+<script>
+    document.getElementById('notif-close-btn')?.addEventListener('click', function() {
+        fetch("{% url 'clear_notifications' %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        }).then(response => {
+            if (!response.ok) {
+                console.error('Failed to clear notifications');
+            }
+        });
+    });
+</script>
 {% endblock %}
