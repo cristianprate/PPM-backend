@@ -6,3 +6,58 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+*.db
+*.db-journal
+
+# Django migrations cache
+**/migrations/*.pyc
+**/migrations/__pycache__/
+
+# Ignore the local settings if present
+local_settings.py
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+
+# Testing
+htmlcov/
+.tox/
+.coverage
+coverage.xml
+nosetests.xml
+test-results.xml
+.pytest_cache/
+
+# Static and media
+staticfiles/
+media/
+static/
+
+# Node-related
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# MacOS & Linux
+.DS_Store
+Thumbs.db
