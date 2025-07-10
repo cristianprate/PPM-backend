@@ -11,6 +11,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{ event.title }}</h5>
                 <p class="card-text">{{ event.description }}</p>
+                <p class="card-text"> Location: {{ event.location }}</p>
                 <p class="card-text"><small class="text-muted">Date: {{ event.date }}</small></p>
 
                 {% if event.id in registered_event_ids %}

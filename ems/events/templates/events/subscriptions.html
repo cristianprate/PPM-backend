@@ -12,6 +12,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ event.title }}</h5>
                     <p class="card-text">{{ event.description }}</p>
+                    <p class="card-text"> Location: {{ event.location }}</p>
                     <p class="card-text"><strong>Date:</strong> {{ event.date }}</p>
                     <form method="post" action="{% url 'event-unregister' event.id %}">
                         {% csrf_token %}

@@ -138,3 +138,17 @@ def clear_notifications(request):
         Notification.objects.filter(user=request.user, is_active=True).update(is_active=False)
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'fail'}, status=400)
+
+@login_required
+def edit_event_view(request, event_id):
+    event = get_object_or_404(Event, id=event_id, organizer=request.user)
+
+    if request.method == 'POST':
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            return redirect('manage-events')
+    else:
+        form = EventForm(instance=event)
+
+    return render(request, 'events/edit_event.html', {'form': form, 'event': event})

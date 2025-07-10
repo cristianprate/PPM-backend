@@ -12,7 +12,10 @@
         <div>
             <strong>{{ event.title }}</strong> – <small class="text-muted">{{ event.date }}</small>
         </div>
+        <div>
+        <a href="{% url 'edit_event' event.id %}" class="btn btn-sm btn-warning">Edit</a>
         <a href="{% url 'event-delete' event.pk %}" class="btn btn-sm btn-danger">Delete</a>
+        </div>
     </li>
     {% endfor %}
 </ul>

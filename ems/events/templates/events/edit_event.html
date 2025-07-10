@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Edit Event: {{ event.title }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Changes</button>
+</form>
+<a href="{% url 'manage-events' %}">Cancel</a>
+{% endblock %}

@@ -12,6 +12,7 @@ from .views import (
     EventCreateView,
     delete_event,
     clear_notifications,
+    edit_event_view,
 )
 
 urlpatterns = [
@@ -28,6 +29,7 @@ urlpatterns = [
         path('manage/', manage_events_view, name='manage-events'),
         path('event/<int:pk>/delete/', delete_event, name='event-delete'),
         path('clear-notifications/', clear_notifications, name='clear_notifications'),
+        path('events/<int:event_id>/edit/', edit_event_view, name='edit_event'),
 
         # Utente
         path('subscriptions/', subscriptions_view, name='subscriptions'),
