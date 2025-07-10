@@ -2,10 +2,17 @@ EVENTS MANAGER WEBSITE
 To start using the functionalities first log in with a Organizer or Attendee account:
 --Organizer--
 Username: Organizer1
-Password: unifi
+Password: OrganizerPassword
+
+Username: Organizer2
+Password: OrganizerPassword
+
 --Attendee--
 Username: Attendee1
-Password: unifi
+Password: AttendeePassword
+
+Username: Attendee2
+Password: AttendeePassword
 
 An Attendee account can view the list of alla events and can subsribe/unsuscribe from them directly on the event-list page via the button. He can also view all the events to which he is subscribed 
 (and unsuscrbe from them). Finally he can view his account personal informations.
