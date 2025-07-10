@@ -15,14 +15,20 @@ class RegisterView(CreateView):
     success_url = reverse_lazy('dashboard')
 
     def form_valid(self, form):
-        response = super().form_valid(form)
+        # salva l'utente nel DB
+        self.object = form.save()
 
-        role = form.cleaned_data['role']
-        group, _ = Group.objects.get_or_create(name=role)
-        self.object.groups.add(group)
+        # assegna il gruppo in base al role scelto
+        role = form.cleaned_data.get('role')
+        if role:
+            group, _ = Group.objects.get_or_create(name=role)
+            self.object.groups.add(group)
 
+        # fai login all'utente appena creato
         login(self.request, self.object)
-        return redirect('dashboard')
+
+        # redirect alla pagina di successo
+        return redirect(self.success_url)
 
 class CustomLoginView(LoginView):
     template_name = 'accounts/login.html'
