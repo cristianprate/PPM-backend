@@ -1,1 +1,1 @@
-web: gunicorn ems.ems.wsgi
+web: python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput && gunicorn ems.ems.wsgi --log-file -
