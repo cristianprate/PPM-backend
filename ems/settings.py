@@ -29,7 +29,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env(
     DEBUG=(bool, False)
 )
-
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ems.settings')
 
@@ -96,16 +95,21 @@ WSGI_APPLICATION = 'ems.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',  # o quello che hai visto su Railway
-        'USER': 'postgres',
-        'PASSWORD': 'CfqJZTYQSWKtYsimmOVVUgdopZHzZWoe',
-        'HOST': 'shortline.proxy.rlwy.net',
-        'PORT': '24279',
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    try:
+        DATABASES = {
+            'default': env.db(),
+        }
+    except Exception as e:
+        print("Errore nel parsing della DATABASE_URL:", e)
+        raise
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
