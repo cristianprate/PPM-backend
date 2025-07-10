@@ -10,12 +10,9 @@ class CustomUserAdmin(UserAdmin):
         ('Campi Personalizzati', {'fields': ('birth_date', 'organization')}),
     )
 
-admin.site.register(CustomUser, CustomUserAdmin)
-
-class MyAdminSite(AdminSite):
     class Media:
         css = {
             'all': ('css/custom_admin.css',)
         }
 
-admin.site = MyAdminSite()
+admin.site.register(CustomUser, CustomUserAdmin)
