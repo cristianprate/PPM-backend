@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% if user.is_authenticated %}
+Logged in as: {{ user.username }}
+Permessi: {{ user.get_all_permissions }}
+{% else %}
+NON loggato
+{% endif %}
 {% block content %}
 {% if notifications %}
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
