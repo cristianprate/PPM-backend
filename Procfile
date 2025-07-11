@@ -1,1 +1,1 @@
-web: python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput && python manage.py loaddata db.json  && gunicorn ems.wsgi --log-file -
+web: python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput  && gunicorn ems.wsgi --log-file -
